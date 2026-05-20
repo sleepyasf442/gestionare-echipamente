@@ -141,3 +141,148 @@ imprumut.returneaza_echipament()
 
 # Afișare finală
 sistem.afiseaza_echipamente()
+
+from datetime import datetime, timedelta
+
+
+# =========================
+# CLASA ECHIPAMENT
+# =========================
+class Echipament:
+    def __init__(self, id_echipament, nume, categorie):
+        self.id = id_echipament
+        self.nume = nume
+        self.categorie = categorie
+        self.stare = "Bună"
+        self.disponibil = True
+        self.data_verificare = datetime.now() + timedelta(days=30)
+
+    def afiseaza_info(self):
+        print(f"""
+ID: {self.id}
+Nume: {self.nume}
+Categorie: {self.categorie}
+Stare: {self.stare}
+Disponibil: {self.disponibil}
+Următoarea verificare: {self.data_verificare.strftime('%d-%m-%Y')}
+""")
+
+    def actualizeaza_stare(self, stare_noua):
+        self.stare = stare_noua
+        print(f"[INFO] Starea echipamentului '{self.nume}' a fost actualizată la: {self.stare}")
+
+
+# =========================
+# CLASA UTILIZATOR
+# =========================
+class Utilizator:
+    def __init__(self, id_utilizator, nume, rol):
+        self.id = id_utilizator
+        self.nume = nume
+        self.rol = rol
+
+    def afiseaza_utilizator(self):
+        print(f"{self.nume} ({self.rol})")
+
+
+# =========================
+# CLASA IMPRUMUT
+# =========================
+class Imprumut:
+    def __init__(self, utilizator, echipament, zile=7):
+        self.utilizator = utilizator
+        self.echipament = echipament
+        self.data_imprumut = datetime.now()
+        self.data_returnare = self.data_imprumut + timedelta(days=zile)
+
+        if echipament.disponibil:
+            echipament.disponibil = False
+            print(f"[IMPRUMUT] {utilizator.nume} a împrumutat '{echipament.nume}'")
+        else:
+            print(f"[EROARE] Echipamentul '{echipament.nume}' nu este disponibil!")
+
+    def returneaza_echipament(self):
+        self.echipament.disponibil = True
+        print(f"[RETURNARE] '{self.echipament.nume}' a fost returnat.")
+
+    def verifica_intarziere(self):
+        if datetime.now() > self.data_returnare:
+            print(f"[ATENTIE] Împrumutul pentru '{self.echipament.nume}' este întârziat!")
+        else:
+            print(f"[INFO] Împrumutul este în termen.")
+            
+class SistemLaborator:
+    def __init__(self):
+        self.echipamente = []
+        self.utilizatori = []
+        self.imprumuturi = []
+
+    # Adăugare echipament
+    def adauga_echipament(self, echipament):
+        self.echipamente.append(echipament)
+
+    # Adăugare utilizator
+    def adauga_utilizator(self, utilizator):
+        self.utilizatori.append(utilizator)
+
+    # Afișare echipamente
+    def afiseaza_echipamente(self):
+        print("\n=== LISTA ECHIPAMENTE ===")
+
+        for echipament in self.echipamente:
+            print(
+                f"{echipament.nume} ({echipament.categorie}) "
+                f"- Stare: {echipament.stare} "
+                f"- Disponibil: {echipament.disponibil}"
+            )
+
+    # Creare împrumut
+    def imprumuta_echipament(self, utilizator, echipament):
+        imprumut = Imprumut(utilizator, echipament)
+        self.imprumuturi.append(imprumut)
+
+    # Verificare mentenanță
+    def verifica_mentenanta(self):
+        print("\n=== VERIFICARE MENTENANȚĂ ===")
+
+        for echipament in self.echipamente:
+            if datetime.now() >= echipament.data_verificare:
+                print(f"[MENTENANȚĂ] '{echipament.nume}' necesită verificare!")
+            else:
+                print(f"[OK] '{echipament.nume}' este în regula
+
+sistem = SistemLaborator()
+
+# Creare echipamente
+laptop = Echipament(1, "Laptop Dell", "IT")
+microscop = Echipament(2, "Microscop Digital", "Biologie")
+
+# Creare utilizatori
+student = Utilizator(1, "Andrei Popescu", "Student")
+profesor = Utilizator(2, "Maria Ionescu", "Profesor")
+
+# Adăugare în sistem
+sistem.adauga_echipament(laptop)
+sistem.adauga_echipament(microscop)
+
+sistem.adauga_utilizator(student)
+sistem.adauga_utilizator(profesor)
+
+# Afișare echipamente
+sistem.afiseaza_echipamente()
+
+# Împrumut echipament
+sistem.imprumuta_echipament(student, laptop)
+
+# Actualizare stare
+laptop.actualizeaza_stare("Necesită reparații")
+
+# Verificare mentenanță
+sistem.verifica_mentenanta()
+
+# Returnare echipament
+imprumut = sistem.imprumuturi[0]
+imprumut.returneaza_echipament()
+
+# Afișare finală
+sistem.afiseaza_echipamente()
