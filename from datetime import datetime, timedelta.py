@@ -263,5 +263,39 @@ if __name__ == "__main__":
     sistem.verifica_imprumuturi()
     sistem.verifica_mentenanta()
 
-    print("\n=== STARE FINALA ===")
-    sistem.afiseaza_echipamente()
+while True:
+    print("\n===== MENIU =====")
+    print("1. Afiseaza toate echipamentele")
+    print("2. Afiseaza echipamente IT")
+    print("3. Afiseaza echipamente defecte")
+    print("4. Sortare dupa nume")
+    print("0. Iesire")
+
+    optiune = input("Alege o optiune: ")
+
+    if optiune == "1":
+        sistem.afiseaza_echipamente()
+
+    elif optiune == "2":
+        sistem.filtreaza_dupa_categorie("IT")
+
+    elif optiune == "3":
+        defecte = sistem.filtreaza_stare("Defect")
+
+        if defecte:
+            for e in defecte:
+                print(e)
+        else:
+            print("Nu exista echipamente defecte.")
+
+    elif optiune == "4":
+        print("\n=== SORTARE DUPA NUME ===")
+        for e in sistem.sorteaza_echipamente():
+            print(e)
+
+    elif optiune == "0":
+        print("Program inchis.")
+        break
+
+    else:
+        print("Optiune invalida!")
