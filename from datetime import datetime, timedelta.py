@@ -208,10 +208,7 @@ class SistemLaborator:
         for imprumut in self.imprumuturi:
             imprumut.verifica_intarziere()
 
-
-# ==========================================
 # EXEMPLU DE UTILIZARE (RULARE ȘI TESTARE)
-# ==========================================
 if __name__ == "__main__":
     sistem = SistemLaborator()
 
