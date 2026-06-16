@@ -212,7 +212,7 @@ class SistemLaborator:
 if __name__ == "__main__":
     sistem = SistemLaborator()
 
-    # Adăugare Echipamente unice (am corectat ID-urile să fie unice)
+    # Adăugare Echipamente unice 
     sistem.adauga_echipament(Echipament(1, "Osciloscop", "Electronica"))
     sistem.adauga_echipament(Echipament(2, "Laptop Dell", "IT"))
     sistem.adauga_echipament(Echipament(3, "Multimetru", "Electronica"))
